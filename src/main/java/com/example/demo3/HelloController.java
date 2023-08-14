@@ -1,6 +1,5 @@
 package com.example.demo3;
 
-import com.example.demo3.Car;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,11 +9,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
@@ -33,61 +31,80 @@ public class HelloController implements Initializable {
     TableView<Car> tableview;
 
     @FXML
-    private TableColumn<Car, Integer> IdColumn;
+    private TableColumn<Car, Integer> idColumn;
     @FXML
-    private TableColumn<Car, String> NameColumn;
+    private TableColumn<Car, String> nameColumn;
     @FXML
-    private TableColumn<Car, String> ColorColumn;
+    private TableColumn<Car, String> colorColumn;
     @FXML
     private TableColumn<Car, Boolean> isAfterCrashColumn;
     @FXML
-    private TableColumn<Car, String> ActionColumn;
+    private TableColumn<Car, String> actionColumn;
 
     ObservableList<Car> data;
+    private ArrayList<Car> rows = new ArrayList<>();
 
+    public void refresh() {
 
-    @FXML
-    public void initialize(URL url, ResourceBundle rb) {
+        for (int i = 0; i < rows.size(); i++) {
+            rows.get(i).getCheckBox().setOnAction(actionEvent -> {
+                selectedCheckBox();
+            });
+        }
+        RefreshHelper.getInstance().setHelloController(this);
+    }
 
-        data = FXCollections.observableArrayList(ListCar.carList);
+    private void selectedCheckBox() {
+        int count = 0;
 
-        IdColumn.setCellValueFactory(new PropertyValueFactory("id"));
-        NameColumn.setCellValueFactory(new PropertyValueFactory("name"));
-        ColorColumn.setCellValueFactory(new PropertyValueFactory("color"));
-        isAfterCrashColumn.setCellValueFactory(new PropertyValueFactory("isAfterCrash"));
-        ActionColumn.setCellValueFactory(new PropertyValueFactory("checkbox"));
-
-        tableview.setItems(data);
+        for (Car row : rows) {
+            if (row.getCheckBox().isSelected()) {
+                ++count;
+            }
+        }
+        if (count == 0) {
+            deleteCar.setDisable(true);
+        }
+        if (count == 1) {
+            deleteCar.setDisable(false);
+        }
+        if (count > 1) {
+            deleteCar.setDisable(false);
+        }
     }
 
     @FXML
-    private void deleteSelectedRows() {
+    public void initialize(URL url, ResourceBundle rb) {
+        rows.addAll(ListCar.carList);
+        tableview.setItems(FXCollections.observableList(rows));
 
-        ObservableList<Car> dataListRemove = FXCollections.observableArrayList();
+        idColumn.setCellValueFactory(new PropertyValueFactory("id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        colorColumn.setCellValueFactory(new PropertyValueFactory("color"));
+        isAfterCrashColumn.setCellValueFactory(new PropertyValueFactory("isAfterCrash"));
+        actionColumn.setCellValueFactory(new PropertyValueFactory("checkBox"));
 
-        for (Car bean : data) {
-            if (bean.getCheckbox().isSelected() == true) {
-                dataListRemove.add(bean);
-                break;
+        RefreshHelper.getInstance().setHelloController(this);
+    }
+
+    @FXML
+    private void deleteSelectedRows(ActionEvent actionEvent) {
+        int length = tableview.getItems().size();
+
+        for (int i = 0; i < length && length > 0; i++) {
+            if (tableview.getItems().get(i).getCheckBox().isSelected()) {
+                tableview.getItems().remove(i);
+                --i;
+                --length;
             }
-            if (bean.getCheckbox().isSelected() == false) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-
-                alert.setTitle("No Selection");
-                alert.setHeaderText("No Person Selected");
-                alert.setContentText("Please select a car in the table.");
-
-                alert.showAndWait();
-            }
+            selectedCheckBox();
         }
-
-        data.removeAll(dataListRemove);
     }
 
     @FXML
     private void editSelectedRow() {
         for (Car bean : data) {
-            if (bean.getCheckbox().isSelected() == true) {
+            if (bean.getCheckBox().isSelected() == true) {
                 try {
                     // Загружаем fxml-файл и создаём новую сцену для всплывающего диалогового окна.
                     FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("CarEditDialog.fxml"));

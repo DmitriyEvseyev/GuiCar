@@ -15,6 +15,7 @@ public class HelloApplication extends Application {
         stage.setTitle("Car manager");
         stage.setScene(scene);
         stage.show();
+        RefreshHelper.getInstance().getHelloController().refresh();
     }
 
     public static void main(String[] args) {

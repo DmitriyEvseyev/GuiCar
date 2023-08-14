@@ -13,7 +13,7 @@ public class Car {
     private SimpleStringProperty name;
     private SimpleStringProperty color;
     private SimpleBooleanProperty isAfterCrash;
-    private CheckBox checkbox;
+    private CheckBox checkBox;
 
     public Car() {
     }
@@ -23,7 +23,7 @@ public class Car {
         this.name = new SimpleStringProperty (name);
         this.color = new SimpleStringProperty (color);
         this.isAfterCrash = new SimpleBooleanProperty (isAfterCrash);
-        this.checkbox = new CheckBox();
+        this.checkBox = new CheckBox();
     }
 
     public int getId() {
@@ -74,12 +74,12 @@ public class Car {
         this.isAfterCrash.set(isAfterCrash);
     }
 
-    public CheckBox getCheckbox() {
-        return checkbox;
+    public CheckBox getCheckBox() {
+        return checkBox;
     }
 
-    public void setCheckbox(CheckBox checkbox) {
-        this.checkbox = checkbox;
+    public void setCheckBox(CheckBox checkBox) {
+        this.checkBox = checkBox;
     }
 
     @Override
