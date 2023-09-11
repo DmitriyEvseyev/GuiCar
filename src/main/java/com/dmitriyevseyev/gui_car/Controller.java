@@ -21,7 +21,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private Label CarManager;
+    private Label carManager;
     @FXML
     private Button modifyCar;
     @FXML
