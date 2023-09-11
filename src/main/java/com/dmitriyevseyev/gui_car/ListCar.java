@@ -1,4 +1,4 @@
-package com.example.demo3;
+package com.dmitriyevseyev.gui_car;
 
 import java.util.Arrays;
 import java.util.List;

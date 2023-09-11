@@ -1,4 +1,4 @@
-package com.example.demo3;
+package com.dmitriyevseyev.gui_car;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

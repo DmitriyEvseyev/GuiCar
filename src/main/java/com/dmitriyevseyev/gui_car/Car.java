@@ -1,11 +1,10 @@
-package com.example.demo3;
+package com.dmitriyevseyev.gui_car;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.CheckBox;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class Car {

@@ -1,4 +1,4 @@
-package com.example.demo3;
+package com.dmitriyevseyev.gui_car;
 
 public class RefreshHelper {
     private HelloController helloController;
