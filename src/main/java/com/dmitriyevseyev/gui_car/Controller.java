@@ -10,13 +10,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class HelloController implements Initializable {
-    public HelloController() {
+public class Controller implements Initializable {
+    public Controller() {
     }
 
     @FXML
@@ -64,12 +65,15 @@ public class HelloController implements Initializable {
         }
         if (count == 0) {
             deleteCar.setDisable(true);
+            modifyCar.setDisable(true);
         }
         if (count == 1) {
             deleteCar.setDisable(false);
+            modifyCar.setDisable(false);
         }
         if (count > 1) {
             deleteCar.setDisable(false);
+            modifyCar.setDisable(false);
         }
     }
 
@@ -90,7 +94,6 @@ public class HelloController implements Initializable {
     @FXML
     private void deleteSelectedRows(ActionEvent actionEvent) {
         int length = tableview.getItems().size();
-
         for (int i = 0; i < length && length > 0; i++) {
             if (tableview.getItems().get(i).getCheckBox().isSelected()) {
                 tableview.getItems().remove(i);
@@ -103,11 +106,12 @@ public class HelloController implements Initializable {
 
     @FXML
     private void editSelectedRow() {
-        for (Car bean : data) {
-            if (bean.getCheckBox().isSelected() == true) {
+        int length = tableview.getItems().size();
+        for (int i = 0; i < length; i++) {
+            if (tableview.getItems().get(i).getCheckBox().isSelected()) {
                 try {
                     // Загружаем fxml-файл и создаём новую сцену для всплывающего диалогового окна.
-                    FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("CarEditDialog.fxml"));
+                    FXMLLoader loader = new FXMLLoader(Application.class.getResource("CarEditDialog.fxml"));
                     Scene scene = new Scene(loader.load());
 
                     Stage dialogStage = new Stage();
@@ -117,14 +121,15 @@ public class HelloController implements Initializable {
                     // Передаём адресата в контроллер.
                     EditCarController controller = loader.getController();
                     controller.setDialogStage(dialogStage);
-                    controller.setCar(bean);
+                    controller.setCar(tableview.getItems().get(i));
 
                     dialogStage.showAndWait();
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println(e.getMessage());
                 }
             }
+            selectedCheckBox();
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.dmitriyevseyev.gui_car;
 
 public class RefreshHelper {
-    private HelloController helloController;
+    private Controller helloController;
     private static RefreshHelper instance;
 
     private RefreshHelper() {
@@ -15,11 +15,11 @@ public class RefreshHelper {
     }
 
 
-    public HelloController getHelloController () {
+    public Controller getHelloController () {
         return helloController;
     }
 
-    public void setHelloController (HelloController helloController) {
+    public void setHelloController (Controller helloController) {
         this.helloController = helloController;
     }
 }

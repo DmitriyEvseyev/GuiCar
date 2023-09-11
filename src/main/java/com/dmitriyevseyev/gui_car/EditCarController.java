@@ -12,11 +12,11 @@ public class EditCarController {
     }
 
     @FXML
-    private TextField IdField;
+    private TextField idField;
     @FXML
-    private TextField NameField;
+    private TextField nameField;
     @FXML
-    private TextField ColorField;
+    private TextField colorField;
     @FXML
     private TextField isAfterCrashField;
 
@@ -24,39 +24,33 @@ public class EditCarController {
     private Car car;
     private boolean okClicked = false;
 
-    /**     * Инициализирует класс-контроллер. Этот метод вызывается автоматически
-     * после того, как fxml-файл будет загружен.     */
     @FXML
     private void initialize() {
     }
 
-    /**      * Устанавливает сцену для этого окна.     *     * @param dialogStage     */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
-    /**     * Задаёт адресата, информацию о котором будем менять.    * @param     */
     public void setCar(Car car) {
         this.car = car;
 
-        IdField.setText(Integer.toString(car.getId()));
-        NameField.setText(car.getName());
-        ColorField.setText(car.getColor());
+        idField.setText(Integer.toString(car.getId()));
+        nameField.setText(car.getName());
+        colorField.setText(car.getColor());
         isAfterCrashField.setText(Boolean.toString(car.isIsAfterCrash()));
     }
 
-    /**     * Returns true, если пользователь кликнул OK, в другом случае false.    *    * @return     */
     public boolean isOkClicked() {
         return okClicked;
     }
 
-    /**     * Вызывается, когда пользователь кликнул по кнопке OK.    */
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            car.setId(Integer.parseInt((IdField.getText())));
-            car.setName(NameField.getText());
-            car.setColor(ColorField.getText());
+            car.setId(Integer.parseInt((idField.getText())));
+            car.setName(nameField.getText());
+            car.setColor(colorField.getText());
             car.setIsAfterCrash(Boolean.parseBoolean(isAfterCrashField.getText()));
 
             okClicked = true;
@@ -64,23 +58,22 @@ public class EditCarController {
         }
     }
 
-    /**     * Вызывается, когда пользователь кликнул по кнопке Cancel.     */
     @FXML
     private void handleCancel() {
         dialogStage.close();
     }
 
-    /**     * Проверяет пользовательский ввод в текстовых полях. * @return true, если пользовательский ввод корректен*/
+    /* Проверяет пользовательский ввод в текстовых полях. * @return true, если пользовательский ввод корректен*/
     private boolean isInputValid() {
         String errorMessage = "";
 
-        if (IdField.getText() == null || IdField.getText().length() == 0) {
+        if (idField.getText() == null || idField.getText().length() == 0) {
             errorMessage += "No valid first name!\n";
         }
-        if (NameField.getText() == null || NameField.getText().length() == 0) {
+        if (nameField.getText() == null || nameField.getText().length() == 0) {
             errorMessage += "No valid last name!\n";
         }
-        if (ColorField.getText() == null || ColorField.getText().length() == 0) {
+        if (colorField.getText() == null || colorField.getText().length() == 0) {
             errorMessage += "No valid street!\n";
         }
 
@@ -97,15 +90,12 @@ public class EditCarController {
         if (errorMessage.length() == 0) {
             return true;
         } else {
-            // Показываем сообщение об ошибке.
             Alert alert = new Alert(AlertType.ERROR);
             alert.initOwner(dialogStage);
             alert.setTitle("Invalid Fields");
             alert.setHeaderText("Please correct invalid fields");
             alert.setContentText(errorMessage);
-
             alert.showAndWait();
-
             return false;
         }
     }
