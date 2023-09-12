@@ -6,11 +6,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class EditCarController {
-
-    public EditCarController() {
-    }
-
+public class AddCarController {
     @FXML
     private TextField idField;
     @FXML
@@ -21,7 +17,7 @@ public class EditCarController {
     private TextField isAfterCrashField;
 
     private Stage dialogStage;
-    private Car car;
+
     private boolean okClicked = false;
 
     @FXML
@@ -32,15 +28,6 @@ public class EditCarController {
         this.dialogStage = dialogStage;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
-
-        idField.setText(Integer.toString(car.getId()));
-        nameField.setText(car.getName());
-        colorField.setText(car.getColor());
-        isAfterCrashField.setText(Boolean.toString(car.isIsAfterCrash()));
-    }
-
     public boolean isOkClicked() {
         return okClicked;
     }
@@ -48,10 +35,13 @@ public class EditCarController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            car.setId(Integer.parseInt((idField.getText())));
-            car.setName(nameField.getText());
-            car.setColor(colorField.getText());
-            car.setIsAfterCrash(Boolean.parseBoolean(isAfterCrashField.getText()));
+            Car car = new Car(
+                    Integer.parseInt((idField.getText())),
+                    nameField.getText(),
+                    colorField.getText(),
+                    Boolean.parseBoolean(isAfterCrashField.getText()));
+
+            ListCar.getInstance().addCar(car);
 
             okClicked = true;
             dialogStage.close();
@@ -95,7 +85,6 @@ public class EditCarController {
 
         if (errorMessage.length() == 0) {
             return true;
-
         } else {
             Alert alert = new Alert(AlertType.ERROR);
             alert.initOwner(dialogStage);
@@ -107,8 +96,3 @@ public class EditCarController {
         }
     }
 }
-
-
-
-
-

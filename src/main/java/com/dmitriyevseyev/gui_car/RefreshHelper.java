@@ -1,13 +1,13 @@
 package com.dmitriyevseyev.gui_car;
 
 public class RefreshHelper {
-    private Controller helloController;
+    private Controller controller;
     private static RefreshHelper instance;
 
     private RefreshHelper() {
     }
 
-    public static  RefreshHelper getInstance() {
+    public static RefreshHelper getInstance() {
         if (instance == null) {
             instance = new RefreshHelper();
         }
@@ -15,11 +15,11 @@ public class RefreshHelper {
     }
 
 
-    public Controller getHelloController () {
-        return helloController;
+    public Controller getController() {
+        return controller;
     }
 
-    public void setHelloController (Controller helloController) {
-        this.helloController = helloController;
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 }

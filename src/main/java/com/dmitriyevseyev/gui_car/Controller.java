@@ -1,7 +1,6 @@
 package com.dmitriyevseyev.gui_car;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+
     public Controller() {
     }
 
@@ -42,17 +42,23 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<Car, String> actionColumn;
 
-    ObservableList<Car> data;
+
     private ArrayList<Car> rows = new ArrayList<>();
 
     public void refresh() {
+        deleteCar.setDisable(true);
+        modifyCar.setDisable(true);
+        rows.clear();
+        int length = ListCar.getInstance().getCarList().size();
 
-        for (int i = 0; i < rows.size(); i++) {
+        for (int i = 0; i < length; i++) {
+            rows.add(ListCar.getInstance().getCarList().get(i));
             rows.get(i).getCheckBox().setOnAction(actionEvent -> {
                 selectedCheckBox();
             });
         }
-        RefreshHelper.getInstance().setHelloController(this);
+        tableview.setItems(FXCollections.observableArrayList(rows));
+        RefreshHelper.getInstance().setController(this);
     }
 
     private void selectedCheckBox() {
@@ -79,8 +85,6 @@ public class Controller implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
-        rows.addAll(ListCar.carList);
-        tableview.setItems(FXCollections.observableList(rows));
 
         idColumn.setCellValueFactory(new PropertyValueFactory("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
@@ -88,7 +92,7 @@ public class Controller implements Initializable {
         isAfterCrashColumn.setCellValueFactory(new PropertyValueFactory("isAfterCrash"));
         actionColumn.setCellValueFactory(new PropertyValueFactory("checkBox"));
 
-        RefreshHelper.getInstance().setHelloController(this);
+        RefreshHelper.getInstance().setController(this);
     }
 
     @FXML
@@ -111,7 +115,7 @@ public class Controller implements Initializable {
             if (tableview.getItems().get(i).getCheckBox().isSelected()) {
                 try {
                     // Загружаем fxml-файл и создаём новую сцену для всплывающего диалогового окна.
-                    FXMLLoader loader = new FXMLLoader(Application.class.getResource("CarEditDialog.fxml"));
+                    FXMLLoader loader = new FXMLLoader(Application.class.getResource("carEdit.fxml"));
                     Scene scene = new Scene(loader.load());
 
                     Stage dialogStage = new Stage();
@@ -119,9 +123,9 @@ public class Controller implements Initializable {
                     dialogStage.setScene(scene);
 
                     // Передаём адресата в контроллер.
-                    EditCarController controller = loader.getController();
-                    controller.setDialogStage(dialogStage);
-                    controller.setCar(tableview.getItems().get(i));
+                    EditCarController editCarcontroller = loader.getController();
+                    editCarcontroller.setDialogStage(dialogStage);
+                    editCarcontroller.setCar(tableview.getItems().get(i));
 
                     dialogStage.showAndWait();
 
@@ -129,8 +133,30 @@ public class Controller implements Initializable {
                     System.out.println(e.getMessage());
                 }
             }
-            selectedCheckBox();
+            refresh();
         }
+    }
+
+    @FXML
+    private void addRow() {
+        try {
+            // Загружаем fxml-файл и создаём новую сцену для всплывающего диалогового окна.
+            FXMLLoader loader = new FXMLLoader(Application.class.getResource("addCar.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Add Car");
+            dialogStage.setScene(scene);
+
+            AddCarController addCarController = loader.getController();
+            addCarController.setDialogStage(dialogStage);
+
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        refresh();
     }
 }
 

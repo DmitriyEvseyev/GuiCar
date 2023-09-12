@@ -14,7 +14,7 @@ public class Application extends javafx.application.Application {
         stage.setTitle("Car manager");
         stage.setScene(scene);
         stage.show();
-        RefreshHelper.getInstance().getHelloController().refresh();
+        RefreshHelper.getInstance().getController().refresh();
     }
 
     public static void main(String[] args) {

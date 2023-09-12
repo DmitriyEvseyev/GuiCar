@@ -19,9 +19,9 @@ public class Car {
 
     public Car(Integer id, String name, String color, boolean isAfterCrash) {
         this.id = new SimpleIntegerProperty(id);
-        this.name = new SimpleStringProperty (name);
-        this.color = new SimpleStringProperty (color);
-        this.isAfterCrash = new SimpleBooleanProperty (isAfterCrash);
+        this.name = new SimpleStringProperty(name);
+        this.color = new SimpleStringProperty(color);
+        this.isAfterCrash = new SimpleBooleanProperty(isAfterCrash);
         this.checkBox = new CheckBox();
     }
 
