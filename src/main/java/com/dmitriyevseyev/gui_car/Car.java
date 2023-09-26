@@ -17,7 +17,7 @@ public class Car {
     public Car() {
     }
 
-    public Car(Integer id, String name, String color, boolean isAfterCrash) {
+    public Car(Integer id, String name, String color, Boolean isAfterCrash) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
         this.color = new SimpleStringProperty(color);

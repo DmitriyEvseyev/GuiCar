@@ -11,11 +11,11 @@
         <Button fx:id="modifyCar" disable="true" layoutX="428.0" layoutY="421.0" mnemonicParsing="false" onAction="#editSelectedRow" prefHeight="25.0" prefWidth="99.0" text="Редактировать" />
         <TableView fx:id="tableview" accessibleRole="IMAGE_VIEW" layoutX="45.0" layoutY="86.0" prefHeight="288.0" prefWidth="595.0">
             <columns>
-                <TableColumn fx:id="idColumn" prefWidth="54.0" text="id" />
+                <TableColumn fx:id="actionColumn" prefWidth="54.0" text="action" />
+                <TableColumn fx:id="idColumn" prefWidth="99.0" text="id" />
                 <TableColumn fx:id="nameColumn" prefWidth="66.0" text="name" />
                 <TableColumn fx:id="colorColumn" prefWidth="88.0" text="color" />
                 <TableColumn fx:id="isAfterCrashColumn" prefWidth="92.0" text="isAfterCrash" />
-                <TableColumn fx:id="actionColumn" prefWidth="99.0" text="action" />
             </columns>
         </TableView>
       <Label fx:id="carManager" alignment="CENTER" layoutX="262.0" layoutY="30.0" prefHeight="17.0" prefWidth="162.0" text="CAR MANAGER" textAlignment="CENTER">

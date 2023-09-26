@@ -49,10 +49,13 @@ public class Controller implements Initializable {
         deleteCar.setDisable(true);
         modifyCar.setDisable(true);
         rows.clear();
+
         int length = ListCar.getInstance().getCarList().size();
 
         for (int i = 0; i < length; i++) {
-            rows.add(ListCar.getInstance().getCarList().get(i));
+            Car car = ListCar.getInstance().getCarList().get(i);
+            car.getCheckBox().setSelected(false);
+            rows.add(car);
             rows.get(i).getCheckBox().setOnAction(actionEvent -> {
                 selectedCheckBox();
             });
@@ -101,11 +104,14 @@ public class Controller implements Initializable {
         for (int i = 0; i < length && length > 0; i++) {
             if (tableview.getItems().get(i).getCheckBox().isSelected()) {
                 tableview.getItems().remove(i);
+                ListCar.getInstance().getCarList().remove(i);
+                // todo delete car from listCar object
                 --i;
                 --length;
             }
             selectedCheckBox();
         }
+        refresh();
     }
 
     @FXML

@@ -3,6 +3,7 @@ package com.dmitriyevseyev.gui_car;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -18,7 +19,7 @@ public class EditCarController {
     @FXML
     private TextField colorField;
     @FXML
-    private TextField isAfterCrashField;
+    private CheckBox isAfterCrashField;
 
     private Stage dialogStage;
     private Car car;
@@ -38,7 +39,8 @@ public class EditCarController {
         idField.setText(Integer.toString(car.getId()));
         nameField.setText(car.getName());
         colorField.setText(car.getColor());
-        isAfterCrashField.setText(Boolean.toString(car.isIsAfterCrash()));
+        isAfterCrashField.setSelected(car.isIsAfterCrash());
+        // isAfterCrashField.setText(Boolean.toString(car.isIsAfterCrash()));
     }
 
     public boolean isOkClicked() {
@@ -51,7 +53,8 @@ public class EditCarController {
             car.setId(Integer.parseInt((idField.getText())));
             car.setName(nameField.getText());
             car.setColor(colorField.getText());
-            car.setIsAfterCrash(Boolean.parseBoolean(isAfterCrashField.getText()));
+            car.setIsAfterCrash(isAfterCrashField.isSelected());
+            //car.setIsAfterCrash(Boolean.parseBoolean(isAfterCrashField.getText()));
 
             okClicked = true;
             dialogStage.close();
@@ -83,7 +86,7 @@ public class EditCarController {
             errorMessage += "Invalid color!\n";
         }
 
-        if (isAfterCrashField.getText() == null || isAfterCrashField.getText().length() == 0) {
+        /*if (isAfterCrashField.getText() == null || isAfterCrashField.getText().length() == 0) {
             errorMessage += "Invalid isAfterCrashField!\n";
         } else {
             try {
@@ -91,7 +94,7 @@ public class EditCarController {
             } catch (NumberFormatException e) {
                 errorMessage += "No valid postal code (must be an integer)!\n";
             }
-        }
+        }*/
 
         if (errorMessage.length() == 0) {
             return true;

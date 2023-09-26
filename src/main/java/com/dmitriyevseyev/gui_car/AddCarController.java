@@ -3,6 +3,7 @@ package com.dmitriyevseyev.gui_car;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -14,7 +15,7 @@ public class AddCarController {
     @FXML
     private TextField colorField;
     @FXML
-    private TextField isAfterCrashField;
+    private CheckBox isAfterCrashField;
 
     private Stage dialogStage;
 
@@ -39,7 +40,7 @@ public class AddCarController {
                     Integer.parseInt((idField.getText())),
                     nameField.getText(),
                     colorField.getText(),
-                    Boolean.parseBoolean(isAfterCrashField.getText()));
+                    isAfterCrashField.isSelected());
 
             ListCar.getInstance().addCar(car);
 
@@ -73,7 +74,8 @@ public class AddCarController {
             errorMessage += "Invalid color!\n";
         }
 
-        if (isAfterCrashField.getText() == null || isAfterCrashField.getText().length() == 0) {
+
+        /* if (isAfterCrashField.getText() == null || isAfterCrashField.getText().length() == 0) {
             errorMessage += "Invalid isAfterCrashField!\n";
         } else {
             try {
@@ -81,7 +83,7 @@ public class AddCarController {
             } catch (NumberFormatException e) {
                 errorMessage += "No valid postal code (must be an integer)!\n";
             }
-        }
+        } */
 
         if (errorMessage.length() == 0) {
             return true;
