@@ -36,6 +36,8 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<Car, String> nameColumn;
     @FXML
+    private TableColumn<Car, String> dateColumn;
+    @FXML
     private TableColumn<Car, String> colorColumn;
     @FXML
     private TableColumn<Car, Boolean> isAfterCrashColumn;
@@ -91,6 +93,7 @@ public class Controller implements Initializable {
 
         idColumn.setCellValueFactory(new PropertyValueFactory("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory("date"));
         colorColumn.setCellValueFactory(new PropertyValueFactory("color"));
         isAfterCrashColumn.setCellValueFactory(new PropertyValueFactory("isAfterCrash"));
         actionColumn.setCellValueFactory(new PropertyValueFactory("checkBox"));
@@ -105,11 +108,10 @@ public class Controller implements Initializable {
             if (tableview.getItems().get(i).getCheckBox().isSelected()) {
                 tableview.getItems().remove(i);
                 ListCar.getInstance().getCarList().remove(i);
-                // todo delete car from listCar object
                 --i;
                 --length;
             }
-            selectedCheckBox();
+            //selectedCheckBox();
         }
         refresh();
     }
@@ -139,8 +141,8 @@ public class Controller implements Initializable {
                     System.out.println(e.getMessage());
                 }
             }
-            refresh();
         }
+        refresh();
     }
 
     @FXML

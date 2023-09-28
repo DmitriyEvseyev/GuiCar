@@ -4,8 +4,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.awt.event.ActionEvent;
+import java.time.LocalDate;
 
 public class AddCarController {
     @FXML
@@ -13,13 +17,15 @@ public class AddCarController {
     @FXML
     private TextField nameField;
     @FXML
+    private TextField dateField;
+    @FXML
+    private DatePicker dp;
+    @FXML
     private TextField colorField;
     @FXML
     private CheckBox isAfterCrashField;
 
     private Stage dialogStage;
-
-    private boolean okClicked = false;
 
     @FXML
     private void initialize() {
@@ -29,9 +35,11 @@ public class AddCarController {
         this.dialogStage = dialogStage;
     }
 
-    public boolean isOkClicked() {
-        return okClicked;
+    public void ShowDate(javafx.event.ActionEvent actionEvent) {
+        LocalDate ld = dp.getValue();
+        dateField.setText(ld.toString());
     }
+
 
     @FXML
     private void handleOk() {
@@ -39,15 +47,15 @@ public class AddCarController {
             Car car = new Car(
                     Integer.parseInt((idField.getText())),
                     nameField.getText(),
+                    dateField.getText(),
                     colorField.getText(),
                     isAfterCrashField.isSelected());
 
             ListCar.getInstance().addCar(car);
-
-            okClicked = true;
             dialogStage.close();
         }
     }
+
 
     @FXML
     private void handleCancel() {
@@ -69,6 +77,9 @@ public class AddCarController {
         }
         if (nameField.getText() == null || nameField.getText().length() == 0) {
             errorMessage += "No valid name!\n";
+        }
+        if (dateField.getText() == null || dateField.getText().length() == 0) {
+            errorMessage += "No valid date!\n";
         }
         if (colorField.getText() == null || colorField.getText().length() == 0) {
             errorMessage += "Invalid color!\n";
