@@ -17,8 +17,6 @@ public class AddCarController {
     @FXML
     private TextField nameField;
     @FXML
-    private TextField dateField;
-    @FXML
     private DatePicker dp;
     @FXML
     private TextField colorField;
@@ -26,6 +24,8 @@ public class AddCarController {
     private CheckBox isAfterCrashField;
 
     private Stage dialogStage;
+
+    String date;
 
     @FXML
     private void initialize() {
@@ -37,7 +37,7 @@ public class AddCarController {
 
     public void ShowDate(javafx.event.ActionEvent actionEvent) {
         LocalDate ld = dp.getValue();
-        dateField.setText(ld.toString());
+        date = ld.toString();
     }
 
 
@@ -47,7 +47,7 @@ public class AddCarController {
             Car car = new Car(
                     Integer.parseInt((idField.getText())),
                     nameField.getText(),
-                    dateField.getText(),
+                    date,
                     colorField.getText(),
                     isAfterCrashField.isSelected());
 
@@ -77,9 +77,6 @@ public class AddCarController {
         }
         if (nameField.getText() == null || nameField.getText().length() == 0) {
             errorMessage += "No valid name!\n";
-        }
-        if (dateField.getText() == null || dateField.getText().length() == 0) {
-            errorMessage += "No valid date!\n";
         }
         if (colorField.getText() == null || colorField.getText().length() == 0) {
             errorMessage += "Invalid color!\n";

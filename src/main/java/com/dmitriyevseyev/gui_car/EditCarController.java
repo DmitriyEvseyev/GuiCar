@@ -8,7 +8,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.Locale;
 
 public class EditCarController {
 
@@ -20,8 +24,6 @@ public class EditCarController {
     @FXML
     private TextField nameField;
     @FXML
-    private TextField dateField;
-    @FXML
     private DatePicker dp;
     @FXML
     private TextField colorField;
@@ -30,7 +32,7 @@ public class EditCarController {
 
     private Stage dialogStage;
     private Car car;
-    private boolean okClicked = false;
+    String date;
 
     @FXML
     private void initialize() {
@@ -42,35 +44,32 @@ public class EditCarController {
 
     public void ShowDate(javafx.event.ActionEvent actionEvent) {
         LocalDate ld = dp.getValue();
-        dateField.setText(ld.toString());
+        date = ld.toString();
     }
 
+    // заполняет поля окна редактирования
     public void setCar(Car car) {
         this.car = car;
 
         idField.setText(Integer.toString(car.getId()));
         nameField.setText(car.getName());
-        dateField.setText(car.getDate());
+        dp.setValue(LocalDate.parse(car.getDate()));
         colorField.setText(car.getColor());
         isAfterCrashField.setSelected(car.isIsAfterCrash());
         // isAfterCrashField.setText(Boolean.toString(car.isIsAfterCrash()));
     }
 
-    public boolean isOkClicked() {
-        return okClicked;
-    }
-
+    //уставливает новые значения после редкатирования
     @FXML
     private void handleOk() {
         if (isInputValid()) {
             car.setId(Integer.parseInt((idField.getText())));
             car.setName(nameField.getText());
-            car.setDate(dateField.getText());
+            car.setDate(dp.getValue().toString());
             car.setColor(colorField.getText());
             car.setIsAfterCrash(isAfterCrashField.isSelected());
             //car.setIsAfterCrash(Boolean.parseBoolean(isAfterCrashField.getText()));
 
-            okClicked = true;
             dialogStage.close();
         }
     }
@@ -95,9 +94,6 @@ public class EditCarController {
         }
         if (nameField.getText() == null || nameField.getText().length() == 0) {
             errorMessage += "No valid name!\n";
-        }
-        if (dateField.getText() == null || dateField.getText().length() == 0) {
-            errorMessage += "No valid date!\n";
         }
         if (colorField.getText() == null || colorField.getText().length() == 0) {
             errorMessage += "Invalid color!\n";
