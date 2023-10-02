@@ -1,6 +1,7 @@
 package com.dmitriyevseyev.gui_car;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -9,15 +10,15 @@ import java.io.IOException;
 public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+        Parent root = FXMLLoader.load(getClass().getResource("view.fxml"));
         stage.setTitle("Car manager");
-        stage.setScene(scene);
+        stage.setScene(new Scene(root));
+
         stage.show();
         RefreshHelper.getInstance().getController().refresh();
     }
 
-    public static void main(String[] args) {
+    public static void run (String[] args) {
         launch();
     }
 }
